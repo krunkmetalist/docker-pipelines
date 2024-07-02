@@ -1,10 +1,10 @@
 pipeline {
     agent {
-        label 'mac'
+        docker { image 'node:16-alpine' }
     }
     options {
         buildDiscarder(
-            logRotator(numToKeepStr: '10', artifactNumToKeep: '10')
+            logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')
         )
     }
     triggers {
@@ -12,14 +12,15 @@ pipeline {
         pollSCM('*/5 * * * *')
     }
     stages {
-        agent {
-            docker { image 'node:16-alpine' }
-        }
         stage('test docker') {
-            printenv
+            steps {
+                sh 'printenv'
+            }
         }
-        stage {
-            sh 'node --version'
+        stage('echo node version') {
+            steps {
+                sh 'node --version'
+            }
         }
     }
 }
