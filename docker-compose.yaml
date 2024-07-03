@@ -11,6 +11,7 @@ services:
     ports:
       - "8080:8080"
       - "50000:50000"
+      - "36953:36953"
     networks:
       - jenkins_network
     restart: unless-stopped
