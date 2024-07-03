@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    privileged: true
+    user: root
+    environment:
+      - JENKINS_OPTS=--prefix=/jenkins
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    networks:
+      - jenkins_network
+
+  docker:
+    image: docker:19.03.12
+    container_name: docker
+    privileged: true
+    volumes:
+      - docker_data:/var/lib/docker
+    networks:
+      - jenkins_network
+
+volumes:
+  jenkins_home:
+  docker_data:
+
+networks:
+  jenkins_network:
+    driver: bridge
+
