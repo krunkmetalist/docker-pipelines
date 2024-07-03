@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   jenkins:
     image: jenkins/jenkins:lts
@@ -19,7 +17,7 @@ services:
       - jenkins_network
 
   docker:
-    image: docker:19.03.12
+    image: docker
     container_name: docker
     privileged: true
     volumes:
