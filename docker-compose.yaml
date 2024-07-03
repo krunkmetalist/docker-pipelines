@@ -5,7 +5,7 @@ services:
     privileged: true
     user: root
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - /Users/nathanreboiro/jenkins_home_backup:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     ports:
