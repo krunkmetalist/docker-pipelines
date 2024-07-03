@@ -13,6 +13,7 @@ services:
       - "50000:50000"
     networks:
       - jenkins_network
+    restart: unless-stopped
 
   docker:
     image: docker
