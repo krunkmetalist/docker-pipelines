@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   jenkins:
     image: jenkins/jenkins:lts
@@ -24,6 +26,19 @@ services:
       - docker_data:/var/lib/docker
     networks:
       - jenkins_network
+
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: selenium
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+      - SCREEN_DEPTH=24
+      - DISPLAY=:99.0
+    networks:
+      - jenkins_network
+    ports:
+      - "4444:4444"
 
 volumes:
   jenkins_home:
