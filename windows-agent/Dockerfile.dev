@@ -7,20 +7,23 @@ RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "ie
 # Install Node.js, Ruby, Java, and other dependencies using Chocolatey
 RUN choco install -y nodejs-lts --version=14.17.0 \
     && choco install -y ruby --version=3.2.1 \
-    && choco install -y jdk17
+    && choco install -y jdk17 \
+    && choco install -y git \
+    && choco install -y vscode
+
+# Install Angular CLI
+RUN npm install -g @angular/cli@12
 
 # Install Visual Studio Build Tools with required workloads
 RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri https://aka.ms/vs/16/release/vs_buildtools.exe -OutFile vs_buildtools.exe; \
     Start-Process vs_buildtools.exe -ArgumentList '--quiet --wait --norestart --nocache --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.AzureBuildTools' -NoNewWindow -Wait"
 
-# Install Visual Studio extension for installer creation
-# (Assuming a VSIX file is available or can be downloaded)
-# RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri http://<VSIX_URL> -OutFile installer_extension.vsix; \
-#    & 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\VSIXInstaller.exe' -quiet -a installer_extension.vsix"
+# Clone a repository
+RUN git clone https://nreboiro@bitbucket.org/compdev/evelyn.git C:\your-project
 
 # Download Jenkins agent
 RUN powershell -Command \
-    Invoke-WebRequest -Uri 'http://10.0.0.177/jnlpJars/agent.jar' -OutFile 'C:\\agent.jar'
+    Invoke-WebRequest -Uri 'http://jenkins.goalexandria.com:8085/jnlpJars/agent.jar' -OutFile 'C:\\agent.jar'
 
 # Set the entrypoint to run the Jenkins agent
 ENTRYPOINT ["java", "-jar", "C:\\agent.jar"]
