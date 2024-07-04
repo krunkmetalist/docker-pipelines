@@ -1,3 +1,10 @@
+# Evelyn MFG::COMPDevOps
+# Author: ya boi, nate.
+# use 'docker compose' to run a portable version of the CI stack:
+# Jenkins: CI server.
+# Docker: Container runtime
+# Selenium: E2E framework
+
 services:
   jenkins:
     image: jenkins/jenkins:lts

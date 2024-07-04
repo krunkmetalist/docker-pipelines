@@ -1,0 +1,55 @@
+# Evelyn MFG::COMPDevOps
+# Author: ya boi, nate.
+# use this to groom a devel host for a new hire, or if a dev gets a new box.
+# this playbook (Ansible) will be called from a CaC pipeline via Jenkins.
+
+- name: Setup Windows Development Environment
+  hosts: windows
+  gather_facts: no
+
+  tasks:
+    - name: Install Chocolatey
+      win_shell: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force;
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+        iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+    - name: Install Node.js, Ruby, Java, Git, and Visual Studio Code
+      win_chocolatey:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs-lts
+        - ruby
+        - openjdk17
+        - git
+        - vscode
+
+    - name: Install Angular CLI
+      win_command: npm install -g @angular/cli@12
+
+    - name: Install Visual Studio Build Tools
+      win_command: start-process vs_buildtools.exe -ArgumentList '--quiet', '--wait', '--norestart', '--nocache', '--add', 'Microsoft.VisualStudio.Workload.VCTools', '--add', 'Microsoft.VisualStudio.Workload.AzureBuildTools' -NoNewWindow -Wait
+      args:
+        chdir: C:\Path\To\Downloaded
+
+    - name: Clone Repository
+      win_git:
+        repo: 'https://bitbucket.com/compdev/evelyn.git'
+        dest: 'C:\evelyn'
+        clone: yes
+        accept_hostkey: yes  # only use in trusted environments
+      vars:
+        ansible_git_executable: C:\Program Files\Git\bin\git.exe
+
+    - name: Set up Jenkins agent (optional)
+      win_command: java -jar agent.jar -jnlpUrl http://jenkins.example.com/computer/agent/slave-agent.jnlp -secret @secret-file
+      args:
+        chdir: C:\Path\To\Jenkins
+
+  vars:
+    ansible_user: 'your_admin_user'
+    ansible_password: 'your_password'
+    ansible_connection: 'winrm'
+    ansible_winrm_transport: 'ntlm'
+    ansible_winrm_server_cert_validation: 'ignore'
