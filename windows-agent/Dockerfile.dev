@@ -20,7 +20,7 @@ RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "In
 
 # Download Jenkins agent
 RUN powershell -Command \
-    Invoke-WebRequest -Uri 'http://<JENKINS_URL>/jnlpJars/agent.jar' -OutFile 'C:\\agent.jar'
+    Invoke-WebRequest -Uri 'http://10.0.0.177/jnlpJars/agent.jar' -OutFile 'C:\\agent.jar'
 
 # Set the entrypoint to run the Jenkins agent
 ENTRYPOINT ["java", "-jar", "C:\\agent.jar"]
