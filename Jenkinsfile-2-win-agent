@@ -5,7 +5,7 @@
 
 pipeline {
     agent {
-        docker { image 'node:16-alpine' }
+        docker { image '<newNameHere>' }
     }
     options {
         buildDiscarder(
@@ -19,11 +19,13 @@ pipeline {
     stages {
         stage('test docker') {
             steps {
+                echo 'show all env vars...'
                 sh 'printenv'
             }
         }
         stage('echo node version') {
             steps {
+                ehco 'node version...'
                 sh 'node --version'
             }
         }

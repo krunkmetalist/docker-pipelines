@@ -1,5 +1,6 @@
 # Evelyn MFG::COMPDevOps
 # Author: ya boi, nate.
+# Date Created: 20240704
 # use 'docker compose' to run a portable version of the CI stack:
 # Jenkins: CI server.
 # Docker: Container runtime

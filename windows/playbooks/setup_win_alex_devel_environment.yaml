@@ -1,5 +1,6 @@
-# Evelyn MFG::COMPDevOps
+# Evelyn MFG::COMPDevOps 2024
 # Author: ya boi, nate.
+# Date Created: 20240704
 # use this to groom a devel host for a new hire, or if a dev gets a new box.
 # this playbook (Ansible) will be called from a CaC pipeline via Jenkins.
 
