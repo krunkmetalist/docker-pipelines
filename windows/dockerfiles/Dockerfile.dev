@@ -38,4 +38,4 @@ ENV ChocolateyUseWindowsCompression=false
 
 # Set the entrypoint to run the Jenkins agent
 #ENTRYPOINT ["java", "-jar", "C:\\agent.jar"]
-ENTRYPOINT ["/bin/bash/"]
+#ENTRYPOINT ["/bin/bash/"]
