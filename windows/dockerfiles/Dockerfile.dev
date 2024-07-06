@@ -7,7 +7,7 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 # Set environment variable for Chocolatey
-ENV ChocolateyUseWindowsCompression=false
+#ENV ChocolateyUseWindowsCompression=false
 
 # Install Chocolatey
 # RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"
