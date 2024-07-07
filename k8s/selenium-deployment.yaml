@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: selenium
+spec:
+  ports:
+    - port: 4444
+      targetPort: 4444
+  selector:
+    app: selenium
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: selenium
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: selenium
+  template:
+    metadata:
+      labels:
+        app: selenium
+    spec:
+      containers:
+        - name: selenium
+          image: selenium/standalone-chrome
+          ports:
+            - containerPort: 4444
