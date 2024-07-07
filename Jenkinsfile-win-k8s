@@ -1,0 +1,28 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+              containers:
+              - name: jnlp
+                image: jenkins/inbound-agent
+                args: ['\$(JENKINS_SECRET)', '\$(JENKINS_NAME)']
+              - name: build
+                image: your-build-image
+                command: ['cat']
+                tty: true
+            """
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                container('build') {
+                    sh 'echo "Running in a Kubernetes pod"'
+                }
+            }
+        }
+    }
+}
