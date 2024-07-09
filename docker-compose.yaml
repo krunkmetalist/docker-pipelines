@@ -13,7 +13,7 @@ services:
     privileged: true
     user: root
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     ports:
@@ -29,7 +29,7 @@ services:
     container_name: docker
     privileged: true
     volumes:
-      - docker_data:/var/lib/docker
+      - docker-data:/var/lib/docker
     networks:
       - jenkins_network
 
@@ -48,8 +48,8 @@ services:
 #      - "4444:4444"
 
 volumes:
-  jenkins_home:
-  docker_data:
+  jenkins-data:
+  docker-data:
 
 networks:
   jenkins_network:
