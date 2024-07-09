@@ -33,18 +33,19 @@ services:
     networks:
       - jenkins_network
 
-  selenium:
-    image: selenium/standalone-chrome
-    container_name: selenium
-    environment:
-      - SCREEN_WIDTH=1920
-      - SCREEN_HEIGHT=1080
-      - SCREEN_DEPTH=24
-      - DISPLAY=:99.0
-    networks:
-      - jenkins_network
-    ports:
-      - "4444:4444"
+# no matching manifest for linux/arm64/v8. wont work on mac's fancy bullshit.
+#  selenium:
+#    image: selenium/standalone-chrome
+#    container_name: selenium
+#    environment:
+#      - SCREEN_WIDTH=1920
+#      - SCREEN_HEIGHT=1080
+#      - SCREEN_DEPTH=24
+#      - DISPLAY=:99.0
+#    networks:
+#      - jenkins_network
+#    ports:
+#      - "4444:4444"
 
 volumes:
   jenkins_home:
