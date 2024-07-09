@@ -33,7 +33,7 @@ services:
     networks:
       - jenkins_network
 
-# no matching manifest for linux/arm64/v8. wont work on mac's fancy bullshit.
+# no matching manifest for linux/arm64/v8.
 #  selenium:
 #    image: selenium/standalone-chrome
 #    container_name: selenium
