@@ -1,52 +1,12 @@
 # Evelyn MFG::COMPDevOps
 # Author: ya boi, nate.
 # Date Created: 20240704
-# use 'docker compose' to run a portable version of the CI stack:
-# Jenkins: CI server.
-# Docker: Container runtime
-# Selenium: E2E framework
+# use 'docker compose' to run a portable suite of CI tools:
+# portainer: docker monitor for prod
+# uptime-kuma: uptime monitor
+# apache guac: team viewer via browser
 
 services:
-  jenkins:
-    image: theautonater801/jenkins:v1
-    container_name: jenkins
-    privileged: true
-    user: root
-    volumes:
-      - jenkins-data:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-      - "36953:36953"
-    networks:
-      - jenkins_network
-    restart: unless-stopped
-
-  docker:
-    image: docker
-    container_name: docker
-    privileged: true
-    volumes:
-      - docker-data:/var/lib/docker
-    networks:
-      - jenkins_network
-
-# no matching manifest for linux/arm64/v8.
-  selenium:
-    image: selenium/standalone-chrome
-    container_name: selenium
-    environment:
-      - SCREEN_WIDTH=1920
-      - SCREEN_HEIGHT=1080
-      - SCREEN_DEPTH=24
-      - DISPLAY=:99.0
-    networks:
-      - jenkins_network
-    ports:
-      - "4444:4444"
-
   portainer:
     image: portainer/portainer-ce
     container_name: portainer
@@ -70,7 +30,7 @@ services:
     image: guacamole/guacamole
     restart: always
     ports:
-      - "8083:8080"
+      - "8083:8083"
 
     environment:
       GUACD_HOSTNAME: guacd
@@ -100,8 +60,6 @@ services:
       - guac-db-data:/var/lib/mysql
 
 volumes:
-  jenkins-data:
-  docker-data:
   portainer-data:
   uptime-kuma-data:
   guac-db-data:
