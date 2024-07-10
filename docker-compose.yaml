@@ -66,11 +66,47 @@ services:
     volumes:
       - uptime-kuma-data:/app/data
 
+  guacamole:
+    image: guacamole/guacamole
+    restart: always
+    ports:
+      - "8080:8080"
+    links:
+      - guacd
+      - db
+    environment:
+      GUACD_HOSTNAME: guacd
+      MYSQL_HOSTNAME: db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USER: compadmin
+      MYSQL_PASSWORD: 18c0mp4ni0n31
+      MYSQL_ROOT_PASSWORD: 18c0mp4ni0n31
+    depends_on:
+      - guacd
+      - db
+
+    guacd:
+      image: guacamole/guacd
+      restart: always
+
+    db:
+      image: mysql:8
+      restart: always
+      environment:
+        MYSQL_DATABASE: guacamole_db
+        MYSQL_USER: compadmin
+        MYSQL_PASSWORD: 18c0mp4ni0n31
+        MYSQL_ROOT_PASSWORD: 18c0mp4ni0n31
+      volumes:
+        - guac-db-data:/var/lib/mysql
+
 volumes:
   jenkins-data:
   docker-data:
   portainer-data:
   uptime-kuma-data:
+  guac-db-data:
 
 networks:
   jenkins_network:
