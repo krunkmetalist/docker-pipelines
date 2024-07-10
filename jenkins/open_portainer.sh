@@ -2,4 +2,4 @@
 
 sleep 2
 
-open http://localhost:9000
+xdg-open http://localhost:9000

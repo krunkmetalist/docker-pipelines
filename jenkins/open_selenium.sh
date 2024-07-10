@@ -2,4 +2,4 @@
 
 sleep 1
 
-open http://localhost:4444
+xdg-open http://localhost:4444
