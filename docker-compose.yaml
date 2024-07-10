@@ -70,7 +70,7 @@ services:
     image: guacamole/guacamole
     restart: always
     ports:
-      - "8080:8080"
+      - "8085:8085"
 
     environment:
       GUACD_HOSTNAME: guacd
