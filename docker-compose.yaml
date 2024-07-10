@@ -34,22 +34,33 @@ services:
       - jenkins_network
 
 # no matching manifest for linux/arm64/v8.
-#  selenium:
-#    image: selenium/standalone-chrome
-#    container_name: selenium
-#    environment:
-#      - SCREEN_WIDTH=1920
-#      - SCREEN_HEIGHT=1080
-#      - SCREEN_DEPTH=24
-#      - DISPLAY=:99.0
-#    networks:
-#      - jenkins_network
-#    ports:
-#      - "4444:4444"
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: selenium
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+      - SCREEN_DEPTH=24
+      - DISPLAY=:99.0
+    networks:
+      - jenkins_network
+    ports:
+      - "4444:4444"
+
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 
 volumes:
   jenkins-data:
   docker-data:
+  portainer-data:
 
 networks:
   jenkins_network:
