@@ -23,19 +23,19 @@ services:
       - jenkins_network
     restart: unless-stopped
 
-  docker:
-    image: docker
-    container_name: docker
-    privileged: true
-    user: root
-    volumes:
-      - docker-data:/var/lib/docker
-    networks:
-      - jenkins_network
+#  docker:
+#    image: docker
+#    container_name: docker
+#    privileged: true
+#    user: root
+#    volumes:
+#      - docker-data:/var/lib/docker
+#    networks:
+#      - jenkins_network
 
 volumes:
   jenkins-data:
-  docker-data:
+#  docker-data:
 
 networks:
   jenkins_network:
