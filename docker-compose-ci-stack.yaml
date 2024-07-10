@@ -26,6 +26,7 @@ services:
   docker:
     image: docker
     container_name: docker
+    privileged: true
     user: root
     volumes:
       - docker-data:/var/lib/docker
