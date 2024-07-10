@@ -10,8 +10,6 @@ services:
   jenkins:
     image: theautonater801/jenkins:v1
     container_name: jenkins
-    privileged: true
-    user: root
     volumes:
       - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
@@ -27,25 +25,10 @@ services:
   docker:
     image: docker
     container_name: docker
-    privileged: true
     volumes:
       - docker-data:/var/lib/docker
     networks:
       - jenkins_network
-
-  # no matching manifest for linux/arm64/v8.
-#  selenium:
-#    image: selenium/standalone-chrome
-#    container_name: selenium
-#    environment:
-#      - SCREEN_WIDTH=1920
-#      - SCREEN_HEIGHT=1080
-#      - SCREEN_DEPTH=24
-#      - DISPLAY=:99.0
-#    networks:
-#      - jenkins_network
-#    ports:
-#      - "4444:4444"
 
 volumes:
   jenkins-data:

@@ -46,7 +46,7 @@
     - name: Set up Jenkins agent (optional)
       win_command: java -jar agent.jar -jnlpUrl http://jenkins.example.com/computer/agent/slave-agent.jnlp -secret @secret-file
       args:
-        chdir: C:\Path\To\Jenkins
+        chdir: C:\jenkins
 
   vars:
     ansible_user: 'your_admin_user'
