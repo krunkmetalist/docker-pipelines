@@ -84,20 +84,20 @@ services:
       - guacd
       - db
 
-    guacd:
-      image: guacamole/guacd
-      restart: always
+  guacd:
+    image: guacamole/guacd
+    restart: always
 
-    db:
-      image: mysql:8
-      restart: always
-      environment:
-        MYSQL_DATABASE: guacamole_db
-        MYSQL_USER: compadmin
-        MYSQL_PASSWORD: 18c0mp4ni0n31
-        MYSQL_ROOT_PASSWORD: 18c0mp4ni0n31
-      volumes:
-        - guac-db-data:/var/lib/mysql
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USER: compadmin
+      MYSQL_PASSWORD: 18c0mp4ni0n31
+      MYSQL_ROOT_PASSWORD: 18c0mp4ni0n31
+    volumes:
+      - guac-db-data:/var/lib/mysql
 
 volumes:
   jenkins-data:
