@@ -4,12 +4,13 @@
 # use 'docker compose' to run a portable version of the CI stack:
 # Jenkins: CI server.
 # Docker: Container runtime
-# Selenium: E2E framework
+# this is DinD btw, so don't use it on mac.
 
 services:
   jenkins:
     image: theautonater801/jenkins:v1
     container_name: jenkins
+    privileged: true
     user: root
     volumes:
       - jenkins-data:/var/jenkins_home

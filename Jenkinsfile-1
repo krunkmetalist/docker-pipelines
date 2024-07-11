@@ -5,7 +5,11 @@
 
 pipeline {
     agent {
-        docker { image 'node:16-alpine' }
+        docker {
+            image 'node:16-alpine'
+            label 'gen8'
+            args '-v C:/jenkins/workspace/docker-pipelines:/workspace'
+        }
     }
     options {
         buildDiscarder(

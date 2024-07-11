@@ -8,6 +8,7 @@
   hosts: windows
   gather_facts: no
 
+  # https://docs.ansible.com/ansible/latest/collections/chocolatey/chocolatey/win_chocolatey_module.html
   tasks:
     - name: Install Chocolatey
       win_shell: |
@@ -43,10 +44,11 @@
       vars:
         ansible_git_executable: C:\Program Files\Git\bin\git.exe
 
-    - name: Set up Jenkins agent (optional)
-      win_command: java -jar agent.jar -jnlpUrl http://jenkins.example.com/computer/agent/slave-agent.jnlp -secret @secret-file
-      args:
-        chdir: C:\jenkins
+    # rather than calling the agent here, we'll use this template in jenkins to provision new agents.
+    #    - name: Set up Jenkins agent (optional)
+    #      win_command: java -jar agent.jar -jnlpUrl http://jenkins.example.com/computer/agent/slave-agent.jnlp -secret @secret-file
+    #      args:
+    #        chdir: C:\jenkins
 
   vars:
     ansible_user: 'your_admin_user'

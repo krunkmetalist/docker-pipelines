@@ -1,0 +1,22 @@
+# Evelyn MFG::COMPDevOps
+# Author: ya boi, nate.
+# Date Created: 20240711
+# use 'docker compose' to run an instance of portainer:
+# portainer: docker portal for prod
+
+version: '3.7'
+
+services:
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+
+volumes:
+  portainer-data:
+

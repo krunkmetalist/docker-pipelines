@@ -33,9 +33,9 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 #RUN git clone https://nreboiro@bitbucket.org/compdev/evelyn.git C:\evelyn
 
 # Download Jenkins agent
-RUN powershell -Command \
-    Invoke-WebRequest -Uri 'http://10.0.0.177:8080/jnlpJars/agent.jar' -OutFile 'C:\\agent.jar'
+#RUN powershell -Command \
+#    Invoke-WebRequest -Uri 'http://10.0.0.177:8080/jnlpJars/agent.jar' -OutFile 'C:\\agent.jar'
 
 # Set the entrypoint to run the Jenkins agent
-ENTRYPOINT ["java", "-jar", "C:\\agent.jar"]
+#ENTRYPOINT ["java", "-jar", "C:\\agent.jar"]
 #ENTRYPOINT ["/bin/bash/"]

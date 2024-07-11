@@ -1,0 +1,43 @@
+# Evelyn MFG::COMPDevOps
+# Author: ya boi, nate.
+# Date Created: 20240711
+# use 'docker compose' to run an instance of apache guacamole:
+# essentially a web-based 'team viewer' type tool, for remote management.
+
+version: '3.7'
+
+services:
+  guacd:
+    image: guacamole/guacd
+    restart: always
+    volumes:
+      - "./data/guacd:/data"
+
+  guacamole:
+    image: guacamole/guacamole
+    restart: always
+    environment:
+      GUACD_HOSTNAME: guacd
+      MYSQL_HOSTNAME: db
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USER: guacamole_user
+      MYSQL_PASSWORD: 18c0mp4ni0n31
+    depends_on:
+      - guacd
+      - db
+    ports:
+      - "8008:8080"
+    volumes:
+      - "./data/guacamole:/config"
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 18c0mp4ni0n31
+      MYSQL_DATABASE: guacamole_db
+      MYSQL_USER: guacamole_user
+      MYSQL_PASSWORD: 18c0mp4ni0n31
+    volumes:
+      - "./data/mysql:/var/lib/mysql"
+    command: --default-authentication-plugin=mysql_native_password
