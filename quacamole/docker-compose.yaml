@@ -4,8 +4,6 @@
 # use 'docker compose' to run an instance of apache guacamole:
 # essentially a web-based 'team viewer' type tool, for remote management.
 
-version: '3.7'
-
 services:
   guacd:
     image: guacamole/guacd

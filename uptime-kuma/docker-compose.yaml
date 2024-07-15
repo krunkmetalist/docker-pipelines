@@ -4,8 +4,6 @@
 # use 'docker compose' to run an instance of uptime-kuma:
 # uptime-kuma: uptime monitor with great integrations & a snazzy UI.
 
-version: '3.7'
-
 services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
