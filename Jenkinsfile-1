@@ -15,8 +15,7 @@ pipeline {
         )
     }
     triggers {
-        // every five minutes, look for changes.
-        pollSCM('*/5 * * * *')
+        pollSCM('H H/5 * * *')
     }
     stages {
         stage('test docker') {
