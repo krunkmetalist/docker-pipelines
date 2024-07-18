@@ -8,13 +8,21 @@
   hosts: windows
   gather_facts: no
 
-  # https://docs.ansible.com/ansible/latest/collections/chocolatey/chocolatey/win_chocolatey_module.html
+  vars_files:
+    - vars/vault.yml
+
   tasks:
     - name: Install Chocolatey
       win_shell: |
         Set-ExecutionPolicy Bypass -Scope Process -Force;
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
         iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+    # hopefully mitigates the need to restart before using choco
+    - name: Refresh environment variables
+      win_shell: |
+        $env:ChocolateyInstall = [System.Environment]::GetEnvironmentVariable('ChocolateyInstall', [System.EnvironmentVariableTarget]::Machine)
+        $env:Path = [System.Environment]::GetEnvironmentVariable('Path', [System.EnvironmentVariableTarget]::Machine)
 
     - name: Install Node.js, Ruby, Java, Git, and Visual Studio Code
       win_chocolatey:
@@ -44,15 +52,10 @@
       vars:
         ansible_git_executable: C:\Program Files\Git\bin\git.exe
 
-    # rather than calling the agent here, we'll use this template in jenkins to provision new agents.
-    #    - name: Set up Jenkins agent (optional)
-    #      win_command: java -jar agent.jar -jnlpUrl http://jenkins.example.com/computer/agent/slave-agent.jnlp -secret @secret-file
-    #      args:
-    #        chdir: C:\jenkins
-
   vars:
-    ansible_user: 'your_admin_user'
-    ansible_password: 'your_password'
+    ansible_user: ''
+    ansible_password: ''
     ansible_connection: 'winrm'
     ansible_winrm_transport: 'ntlm'
     ansible_winrm_server_cert_validation: 'ignore'
+

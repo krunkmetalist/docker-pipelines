@@ -1,41 +1,33 @@
 # Evelyn MFG::COMPDevOps
 # Author: ya boi, nate.
 # Date Created: 20240704
-# windows docker build agent for Alexnadria
+# windows build image for Alexnadria
 
 # Use the official Windows Server Core image
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+FROM dockurr/windows
 
 # Set environment variable for Chocolatey
-#ENV ChocolateyUseWindowsCompression=false
+ENV ChocolateyUseWindowsCompression=false
 
 # Install Chocolatey
-# RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"
+RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"
 
 # Add Chocolatey to the environment path
-# RUN setx /M PATH "%PATH%;C:\ProgramData\chocolatey\bin"
+RUN setx /M PATH "%PATH%;C:\ProgramData\chocolatey\bin"
 
 # Install Node.js, Ruby, Java, and other dependencies using Chocolatey
-#RUN choco install -y nodejs-lts --version=14.17.0 \
-#    && choco install -y ruby --version=3.2.1 \
-#    && choco install -y jdk17 \
-#    && choco install -y git \
-#    && choco install -y vscode
+RUN choco install -y nodejs-lts --version=14.17.0 \
+    && choco install -y ruby --version=3.2.1 \
+    && choco install -y jdk17 \
+    && choco install -y git \
+    && choco install -y vscode
 
 # Install Angular CLI
-#RUN npm install -g @angular/cli@12
+RUN npm install -g @angular/cli@12
 
 # Install Visual Studio Build Tools with required workloads
-#RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri https://aka.ms/vs/16/release/vs_buildtools.exe -OutFile vs_buildtools.exe; \
-#    Start-Process vs_buildtools.exe -ArgumentList '--quiet --wait --norestart --nocache --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.AzureBuildTools' -NoNewWindow -Wait"
+RUN powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri https://aka.ms/vs/16/release/vs_buildtools.exe -OutFile vs_buildtools.exe; \
+    Start-Process vs_buildtools.exe -ArgumentList '--quiet --wait --norestart --nocache --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.AzureBuildTools' -NoNewWindow -Wait"
 
 # Clone a repository
-#RUN git clone https://nreboiro@bitbucket.org/compdev/evelyn.git C:\evelyn
-
-# Download Jenkins agent
-#RUN powershell -Command \
-#    Invoke-WebRequest -Uri 'http://10.0.0.177:8080/jnlpJars/agent.jar' -OutFile 'C:\\agent.jar'
-
-# Set the entrypoint to run the Jenkins agent
-#ENTRYPOINT ["java", "-jar", "C:\\agent.jar"]
-#ENTRYPOINT ["/bin/bash/"]
+RUN git clone https://nreboiro@bitbucket.org/compdev/evelyn.git C:\evelyn
