@@ -1,0 +1,75 @@
+---
+- name: Install Docker, kubeadm, kubelet, and kubectl on Ubuntu hosts
+  hosts: all
+  become: yes
+
+  vars:
+    docker_apt_key_url: https://download.docker.com/linux/ubuntu/gpg
+    docker_apt_repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    kubernetes_apt_key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    kubernetes_apt_repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+
+  tasks:
+    - name: Install prerequisites
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: "{{ docker_apt_key_url }}"
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: "{{ docker_apt_repo }}"
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: yes
+
+    - name: Add user to Docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Add Kubernetes GPG key
+      apt_key:
+        url: "{{ kubernetes_apt_key_url }}"
+        state: present
+
+    - name: Add Kubernetes APT repository
+      apt_repository:
+        repo: "{{ kubernetes_apt_repo }}"
+        state: present
+
+    - name: Install kubeadm, kubelet, and kubectl
+      apt:
+        name:
+          - kubeadm
+          - kubelet
+          - kubectl
+        state: present
+        update_cache: yes
+
+    - name: Ensure Docker service is started
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Ensure kubelet service is started
+      service:
+        name: kubelet
+        state: started
+        enabled: yes
