@@ -22,4 +22,4 @@ services:
     stop_grace_period: 2m
     restart: on-failure
     volumes:
-      - ~/data:/storage
+      - ~/data/shared:/shared
